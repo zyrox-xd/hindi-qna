@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हिंदी प्रश्नोत्तरी - Complete Hindi Q&A</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1e5799;
+            --primary-light: #2989d8;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --text: #333;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            color: var(--primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .control-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .lesson-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .lesson-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .qa-pair {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .qa-pair:hover {
+            background: #f0f5ff;
+        }
+
+        .question {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .answer {
+            color: #27ae60;
+            font-size: 1rem;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .action-buttons {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .translate-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .translate-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .listen-btn {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .listen-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        .translation-panel {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 5px;
+            border-left: 3px solid var(--primary);
+            display: none;
+        }
+
+        .translation-panel.show {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .action-buttons {
+                position: static;
+                margin-top: 15px;
+                justify-content: flex-end;
+            }
+            
+            .qa-pair {
+                padding-bottom: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>हिंदी प्रश्नोत्तरी वेबसाइट</h1>
+            <p>अनुवाद और सुनने की सुविधा के साथ</p>
+        </header>
+
+        <div class="controls">
+            <button class="control-btn active" data-filter="all">सभी पाठ</button>
+            <button class="control-btn" data-filter="lesson1">पाठ 1</button>
+            <button class="control-btn" data-filter="lesson2">पाठ 2</button>
+            <button class="control-btn" data-filter="lesson3">पाठ 3</button>
+            <button class="control-btn" data-filter="lesson4">पाठ 4</button>
+            <button class="control-btn" data-filter="lesson5">पाठ 5</button>
+            <button class="control-btn" data-filter="lesson6">पाठ 6</button>
+        </div>
+
+        <main id="content-container">
+            <!-- Lesson 1 -->
+            <section class="lesson-section lesson1">
+                <h2 class="lesson-title">पाठ 1: धर्म और भाषा</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">मनुष्य किस प्रकार का प्राणी है? वह किसके बिना चिंतन मनन नहीं कर सकता?</div>
+                    <div class="answer">👉 मनुष्य मननशील प्राणी है, वह भाषा के बिना चिंतन-मनन नहीं कर सकता।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What kind of being is a human? Without what can they not think and contemplate? 👉 Humans are thinking beings, they cannot think and contemplate without language.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">धर्म के दो लक्षण लिखिए।</div>
+                    <div class="answer">👉 (1) चोरी न करना (2) झूठ न बोलना</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Write two characteristics of religion. 👉 (1) Not to steal (2) Not to lie.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">भाषा किसका साधन है?</div>
+                    <div class="answer">👉 विचारों और भावों के आदान-प्रदान का साधन।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What is language a means of? 👉 A means of exchange of thoughts and emotions.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">कैसी बातें दिलों को जोड़ती हैं और कैसी बातें उन्हें तोड़ती हैं?</div>
+                    <div class="answer">👉 मधुर बातें जोड़ती हैं, कटु बातें तोड़ती हैं।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What kind of words connect hearts and what kind break them? 👉 Sweet words connect, bitter words break.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">किसी शिक्षित व्यक्ति की पहचान कैसे होती है?</div>
+                    <div class="answer">👉 उच्चारण, शब्द-चयन, मुहावरों का प्रयोग और व्यवहार से।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> How is an educated person identified? 👉 By pronunciation, word selection, use of idioms, and behavior.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson 2 -->
+            <section class="lesson-section lesson2">
+                <h2 class="lesson-title">पाठ 2: चीफ की दावत</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">किनके पसीने पोछने की फुरसत नहीं थी?</div>
+                    <div class="answer">👉 शामनाथ और उसकी पत्नी के पास।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Who didn't have time to wipe their sweat? 👉 Shyamnath and his wife.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">साहब को क्या पसंद आया? मेमसाहब को क्या पसंद आया?</div>
+                    <div class="answer">👉 साहब को शराब, मेमसाहब को परदे और सोफा-कवर पसंद आए।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What did the sahib like? What did the memsahib like? 👉 The sahib liked alcohol, the memsahib liked curtains and sofa covers.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">चीफ को माँ की कौन-सी चीज़ पसंद आई?</div>
+                    <div class="answer">👉 माँ की बनाई फुलकारी।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which of mother's things did the chief like? 👉 The phulkari (embroidery) made by mother.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">पंडितजी के घरों में क्या-क्या बनता है?</div>
+                    <div class="answer">👉 पूड़ियाँ और फुलकारियाँ।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What is made in Panditji's houses? 👉 Pooris (fried bread) and phulkari (embroidery).
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson 3 -->
+            <section class="lesson-section lesson3">
+                <h2 class="lesson-title">पाठ 3: प्रेमियों की वापसी</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">लेखक का नाम और प्रेमी क्या करने वाले थे?</div>
+                    <div class="answer">👉 लेखक हरिशंकर परसाई हैं। प्रेमी आत्महत्या करने वाले थे।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What is the author's name and what were the lovers going to do? 👉 The author is Harishankar Parsai. The lovers were going to commit suicide.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">प्रेमियों के नाम लिखिए।</div>
+                    <div class="answer">👉 प्रेमेन्द्र और रंजना।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Write the names of the lovers. 👉 Premendra and Ranjana.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">पाकशास्त्र की प्रोफेसर का नाम क्या था?</div>
+                    <div class="answer">👉 मिस सूद।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What was the name of the culinary arts professor? 👉 Miss Sood.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">रंजना ने किससे प्रेम किया और किससे शादी चाही?</div>
+                    <div class="answer">👉 प्रेमेन्द्र से प्रेम, पर विनोद से शादी चाहती थी।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Who did Ranjana love and who did she want to marry? 👉 Loved Premendra, but wanted to marry Vinod.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">कार दुर्घटना में कौन मरा और उसके पिता ने किसे सस्पेंड करवाया?</div>
+                    <div class="answer">👉 विनोद मरा; उसके पिता ने रंजना के पिता को सस्पेंड करवाया।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Who died in the car accident and who did his father get suspended? 👉 Vinod died; his father got Ranjana's father suspended.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson 4 -->
+            <section class="lesson-section lesson4">
+                <h2 class="lesson-title">पाठ 4: सुई दो रानी डोरा दो रानी</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">साधन पहुँचाने के माध्यम पहले क्या था और अब क्या है?</div>
+                    <div class="answer">👉 पहले यात्री साधन पहुँचाते थे, अब डाक द्वारा।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What was the means of delivering goods earlier and what is it now? 👉 Earlier travelers delivered goods, now by post.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">बद्रीनाथ के पास कौन-सी नदी बहती है और किसके मंदिर दिखते हैं?</div>
+                    <div class="answer">👉 अलकनन्दा नदी; पास में द्रोपदी का मंदिर।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which river flows near Badrinath and whose temple is visible? 👉 Alaknanda river; Draupadi's temple nearby.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">लेखिका कहाँ ठहरी थी? बंगले का नाम और मालिक कौन था?</div>
+                    <div class="answer">👉 सुंदर बंगला, मालिक नारायण दत्त।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Where did the author stay? What was the name of the bungalow and who was the owner? 👉 Sundar Bangla, owner Narayan Dutt.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">पहाड़ों से नीचे उतरते समय क्या देखा?</div>
+                    <div class="answer">👉 पेड़ों के झुरमुट और प्राकृतिक दृश्य।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What was seen while descending the mountains? 👉 Clusters of trees and natural scenery.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson 5 -->
+            <section class="lesson-section lesson5">
+                <h2 class="lesson-title">पाठ 5: पर्यावरण और हम</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">पिछले कितने दशक से पर्यावरण की गंभीर समस्या है?</div>
+                    <div class="answer">👉 पाँच दशक से।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> For how many decades has there been a serious environmental problem? 👉 For five decades.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">पर्यावरण का सम्बन्ध किनसे है?</div>
+                    <div class="answer">👉 जल, थल और वायु में हानिकारक पदार्थों के मिलन से।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> What is environment related to? 👉 With the mixing of harmful substances in water, land and air.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">ताजमहल किसने बनवाया?</div>
+                    <div class="answer">👉 शाहजहाँ ने मुमताज की याद में।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Who built the Taj Mahal? 👉 Shah Jahan in memory of Mumtaz.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">सर्वाधिक कार्बन-डाइऑक्साइड उत्पन्न करने वाले दो देश कौन-से हैं?</div>
+                    <div class="answer">👉 अमेरिका और रूस।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which two countries produce the most carbon dioxide? 👉 America and Russia.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">DDT के आविष्कारक कौन थे और कौन-सा पुरस्कार मिला?</div>
+                    <div class="answer">👉 पॉल हर्मन मूलर, नोबेल पुरस्कार 1948।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Who was the inventor of DDT and which award did he receive? 👉 Paul Hermann Muller, Nobel Prize 1948.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lesson 6 -->
+            <section class="lesson-section lesson6">
+                <h2 class="lesson-title">पाठ 6: चरित्र संगठन</h2>
+                
+                <div class="qa-pair">
+                    <div class="question">चरित्र के लक्षण लिखिए।</div>
+                    <div class="answer">👉 विनय, उदारता, धैर्य, लालच में न पड़ना।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Write the characteristics of character. 👉 Humility, generosity, patience, not falling into greed.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">किस मुनि ने किसके वक्षस्थल पर लात मारी?</div>
+                    <div class="answer">👉 भृगु मुनि ने भगवान विष्णु के वक्षस्थल पर।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which sage kicked whose chest? 👉 Sage Bhrigu kicked Lord Vishnu's chest.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">कौन-कौन से राजा लालच में नहीं पड़े?</div>
+                    <div class="answer">👉 महाराज दिलीप, प्रभु श्रीराम, भीष्म पितामह।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which kings did not fall into greed? 👉 King Dilip, Lord Rama, Bhishma Pitamah.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">अभ्यास के लिए कौन-सी अवस्था उपयुक्त है?</div>
+                    <div class="answer">👉 बाल्यकाल।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> Which stage is suitable for practice? 👉 Childhood.
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">हमें किस प्रकार सत्य बोलना चाहिए?</div>
+                    <div class="answer">👉 मनसा, वाचा और कर्मणा से।</div>
+                    <div class="action-buttons">
+                        <button class="btn translate-btn"><i class="fas fa-language"></i> अनुवाद</button>
+                        <button class="btn listen-btn"><i class="fas fa-volume-up"></i> सुनें</button>
+                    </div>
+                    <div class="translation-panel">
+                        <strong>English Translation:</strong> How should we speak the truth? 👉 Through mind, speech and action.
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>हिंदी प्रश्नोत्तरी वेबसाइट &copy; 2023 - सभी अधिकार सुरक्षित</p>
+        </footer>
+
+        <div class="back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+
+    <script>
+        // Text-to-speech functionality
+        const listenButtons = document.querySelectorAll('.listen-btn');
+        
+        listenButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const qaPair = this.closest('.qa-pair');
+                const question = qaPair.querySelector('.question').textContent;
+                const answer = qaPair.querySelector('.answer').textContent;
+                
+                const textToSpeak = `${question} ${answer}`;
+                
+                // Using Web Speech API
+                if ('speechSynthesis' in window) {
+                    const speech = new SpeechSynthesisUtterance();
+                    speech.text = textToSpeak;
+                    speech.lang = 'hi-IN'; // Hindi
+                    speech.rate = 0.9;
+                    speech.pitch = 1;
+                    
+                    window.speechSynthesis.speak(speech);
+                } else {
+                    alert('आपका ब्राउज़र टेक्स्ट-टू-स्पीच सपोर्ट नहीं करता है।');
+                }
+            });
+        });
+
+        // Translation functionality
+        const translateButtons = document.querySelectorAll('.translate-btn');
+        
+        translateButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const qaPair = this.closest('.qa-pair');
+                const translationPanel = qaPair.querySelector('.translation-panel');
+                translationPanel.classList.toggle('show');
+                
+                // Change button text based on state
+                if (translationPanel.classList.contains('show')) {
+                    this.innerHTML = '<i class="fas fa-language"></i> अनुवाद छिपाएँ';
+                } else {
+                    this.innerHTML = '<i class="fas fa-language"></i> अनुवाद';
+                }
+            });
+        });
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.control-btn');
+        const lessonSections = document.querySelectorAll('.lesson-section');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                lessonSections.forEach(section => {
+                    if (filter === 'all' || section.classList.contains(filter)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Back to top functionality
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
